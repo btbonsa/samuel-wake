@@ -14,7 +14,7 @@ export function About() {
 
   return (
     <section id="about" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      <div className="absolute inset-0 bg-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -24,8 +24,8 @@ export function About() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Who I am</p>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">About Me</h2>
+          <p className="text-sm font-semibold text-foreground/80 uppercase tracking-widest mb-3">Who I am</p>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">About Me</h2>
           <div className="section-divider" />
         </motion.div>
 
@@ -35,16 +35,19 @@ export function About() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Decorative ring */}
-              <div className="absolute -inset-4 bg-primary/5 blur-2xl" />
-              <div className="relative overflow-hidden border border-primary/20 shadow-2xl shadow-black group">
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative max-w-md mx-auto">
+              <div className="w-64 sm:w-72 md:w-80 mx-auto">
+                <div className="fancy-frame mx-auto">
+                  <span className="sunlight" />
+                  <span className="fancy-ring" />
+                  <span className="glisten" />
+                  <img
+                    src={profileImage}
+                    alt="Profile"
+                    className="photo"
+                  />
+                  <span className="rim" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -72,12 +75,12 @@ export function About() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                  className="glass-card p-5 text-center hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group"
+                  className="glass-card p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300 group"
                 >
-                  <div className="w-10 h-10 bg-primary/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-all duration-300">
-                    <item.icon className="w-5 h-5 text-primary" />
+                  <div className="w-10 h-10 bg-transparent flex items-center justify-center mx-auto mb-3">
+                    <item.icon className="w-5 h-5 text-foreground/80" />
                   </div>
-                  <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
+                  <h3 className="font-semibold text-sm mb-1 text-[#c9944a]">{item.title}</h3>
                   <p className="text-xs text-muted-foreground">{item.description}</p>
                 </motion.div>
               ))}

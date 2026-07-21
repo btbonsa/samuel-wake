@@ -42,7 +42,7 @@ export function Skills() {
 
   return (
     <section id="skills" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/5 to-transparent" />
+      <div className="absolute inset-0 bg-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -52,30 +52,30 @@ export function Skills() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">What I know</p>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Skills & Expertise</h2>
+          <p className="text-sm font-semibold text-foreground/80 uppercase tracking-widest mb-3">What I know</p>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Skills & Expertise</h2>
           <div className="section-divider" />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 text-foreground te">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.category}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: categoryIndex * 0.15 }}
-              className="glass-card p-8 hover:-translate-y-2 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10 transition-all duration-400 group"
+              className="glass-card p-8 hover:-translate-y-2 hover:shadow-md transition-all duration-400 group"
             >
               <div className="flex items-center gap-3 mb-8">
-                <span className="text-primary font-mono text-sm font-bold">//</span>
-                <h3 className="text-lg font-bold tracking-wide">{category.category}</h3>
+                <span className="text-foreground/80 text-sm font-semibold">//</span>
+                <h3 className="text-lg font-bold tracking-wide text-[#c9944a]">{category.category}</h3>
               </div>
               <div className="space-y-5">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
                       <span className="text-sm font-medium text-foreground/80">{skill.name}</span>
-                      <span className="text-xs font-semibold text-primary">{skill.level}%</span>
+                      <span className="text-xs font-semibold text-foreground/80">{skill.level}%</span>
                     </div>
                     <div className="h-px bg-[#1a1a1a] overflow-hidden">
                       <motion.div
@@ -87,7 +87,7 @@ export function Skills() {
                           ease: 'easeOut',
                         }}
                         className="h-full"
-                        style={{ background: 'var(--color-primary)' }}
+                        style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6))' }}
                       />
                     </div>
                   </div>

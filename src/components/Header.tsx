@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // background effects are always enabled and styled monochrome
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -43,13 +44,13 @@ export function Header() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl sm:text-2xl font-bold tracking-tight text-white font-mono"
+            className="text-xl sm:text-2xl font-bold tracking-tight text-white"
           >
             &lt;BT /&gt;
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-2">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.href}
@@ -60,7 +61,7 @@ export function Header() {
                 className="px-4 py-2 text-sm font-medium text-[#888] hover:text-white rounded-none hover:bg-white/5 transition-all duration-200 relative group tracking-wide uppercase text-xs"
               >
                 {item.label}
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-primary transition-all duration-300 group-hover:w-4/5" />
+                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-foreground/60 transition-all duration-300 group-hover:w-4/5" />
               </motion.button>
             ))}
 
@@ -96,7 +97,7 @@ export function Header() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                     onClick={() => handleNavClick(item.href)}
-                    className="w-full text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-[#888] hover:text-primary hover:bg-white/5 border-l-2 border-transparent hover:border-primary transition-all duration-200"
+                    className="w-full text-left px-4 py-3 text-xs font-semibold uppercase tracking-widest text-[#888] hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-foreground transition-all duration-200"
                   >
                     {item.label}
                   </motion.button>

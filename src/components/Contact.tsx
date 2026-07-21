@@ -10,9 +10,9 @@ export function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [responseMessage, setResponseMessage] = useState('');
 
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,11 +51,11 @@ export function Contact() {
     { icon: MapPin, label: 'Location', value: 'Addis Ababa, Ethiopia', href: '#' },
   ];
 
-  const inputClass = "w-full px-4 py-3 rounded-xl bg-accent/50 border border-border/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-sm placeholder:text-muted-foreground/60";
+  const inputClass = "w-full px-4 py-3 rounded-xl bg-accent/50 border border-border/60 focus:border-foreground focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-200 text-sm placeholder:text-muted-foreground/60";
 
   return (
     <section id="contact" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      <div className="absolute inset-0 bg-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -65,8 +65,8 @@ export function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Let's talk</p>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Get In Touch</h2>
+          <p className="text-sm font-semibold text-foreground/80 uppercase tracking-widest mb-3">Let's talk</p>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Get In Touch</h2>
           <div className="section-divider" />
           <p className="mt-6 text-muted-foreground max-w-xl mx-auto">
             Have a project in mind or just want to chat? Feel free to reach out!
@@ -81,17 +81,17 @@ export function Contact() {
             className="space-y-4"
           >
             <h3 className="text-xl font-bold mb-6">Contact Information</h3>
-            {contactInfo.map((item, index) => (
+              {contactInfo.map((item, index) => (
               <motion.a
                 key={item.label}
                 href={item.href}
                 initial={{ opacity: 0, x: -20 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                className="flex items-center gap-4 p-5 glass-card rounded-2xl hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group"
+                className="flex items-center gap-4 p-5 glass-card rounded-2xl hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 group"
               >
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:from-primary/30 group-hover:to-secondary/30 transition-all duration-300">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="w-11 h-11 rounded-xl bg-transparent flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                  <item.icon className="w-5 h-5 text-foreground/80" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground mb-0.5">{item.label}</p>
