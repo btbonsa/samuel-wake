@@ -1,102 +1,100 @@
-import { motion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import { useInView } from './hooks/useInView';
+import { categories, tools } from '../data/skills';
+
+/* ------------------------------------------------------------------ */
+/* Section                                                             */
+/* ------------------------------------------------------------------ */
 
 export function Skills() {
   const { ref, inView } = useInView();
 
-  const skillCategories = [
-    {
-      category: 'Frontend',
-      emoji: '🎨',
-      skills: [
-        { name: 'React', level: 90 },
-        {name: 'React Native' , level:90},
-        { name: 'TypeScript', level: 85 },
-        { name: 'Next.js', level: 80 },
-        { name: 'Tailwind CSS', level: 90 },
-      ],
-    },
-    {
-      category: 'Backend',
-      emoji: '⚙️',
-      skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Python', level: 80 },
-        { name: 'MySql', level: 75 },
-        { name: 'MongoDB', level: 70 },
-        { name: 'REST APIs', level: 90 },
-      ],
-    },
-    {
-      category: 'Tools & Others',
-      emoji: '🛠️',
-      skills: [
-        { name: 'Git', level: 90 },
-        { name: 'Docker', level: 75 },
-        { name: 'AWS', level: 70 },
-        { name: 'CI/CD', level: 80 },
-        { name: 'Agile', level: 85 },
-      ],
-    },
-  ];
-
   return (
-    <section id="skills" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-transparent" />
+    <MotionConfig reducedMotion="user">
+      <section
+        id="skills"
+        className="relative scroll-mt-20 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
+      >
+        <div className="mx-auto max-w-4xl">
+          {/* Header */}
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-14 text-center sm:mb-16"
+          >
+            <p className="mb-4 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f25b3e]">
+              <span className="h-px w-8 bg-[#f25b3e]/60" aria-hidden />
+              What I do
+              <span className="h-px w-8 bg-[#f25b3e]/60" aria-hidden />
+            </p>
+            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Skills &amp; expertise
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
+              End-to-end social media execution — from the first idea to the
+              monthly report.
+            </p>
+          </motion.div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <p className="text-sm font-semibold text-foreground/80 uppercase tracking-widest mb-3">What I know</p>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Skills & Expertise</h2>
-          <div className="section-divider" />
-        </motion.div>
+          {/* Three clean capability cards */}
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {categories.map((cat, index) => (
+              <motion.article
+                key={cat.category}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.15 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="group glass-card flex min-w-0 flex-col rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#f25b3e]/40"
+              >
+                <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-foreground/[0.05] text-foreground/70 transition-colors duration-300 group-hover:bg-[#f25b3e]/15 group-hover:text-[#f25b3e]">
+                  <cat.icon className="h-5 w-5" aria-hidden />
+                </span>
 
-        <div className="grid md:grid-cols-3 gap-8 text-foreground te">
-          {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.15 }}
-              className="glass-card p-8 hover:-translate-y-2 hover:shadow-md transition-all duration-400 group"
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <span className="text-foreground/80 text-sm font-semibold">//</span>
-                <h3 className="text-lg font-bold tracking-wide text-[#c9944a]">{category.category}</h3>
-              </div>
-              <div className="space-y-5">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium text-foreground/80">{skill.name}</span>
-                      <span className="text-xs font-semibold text-foreground/80">{skill.level}%</span>
-                    </div>
-                    <div className="h-px bg-[#1a1a1a] overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${skill.level}%` } : {}}
-                        transition={{
-                          duration: 1.2,
-                          delay: categoryIndex * 0.15 + skillIndex * 0.08,
-                          ease: 'easeOut',
-                        }}
-                        className="h-full"
-                        style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6))' }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                <h3 className="text-lg font-bold text-foreground">{cat.category}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {cat.description}
+                </p>
+
+                <ul className="mt-5 space-y-2 border-t border-border/60 pt-5">
+                  {cat.skills.map((skill) => (
+                    <li
+                      key={skill}
+                      className="flex items-center gap-2.5 text-sm text-foreground/75"
+                    >
+                      <span className="h-1 w-1 shrink-0 rotate-45 bg-[#f25b3e]" aria-hidden />
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Tools — simple static row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-14 text-center sm:mt-16"
+          >
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground/70">
+              Tools I work with
+            </p>
+            <ul className="flex flex-wrap items-center justify-center gap-2">
+              {tools.map((tool) => (
+                <li
+                  key={tool}
+                  className="rounded-full border border-border bg-foreground/[0.03] px-4 py-2 text-sm font-medium text-foreground/75 transition-colors duration-200 hover:border-[#f25b3e]/40 hover:text-foreground"
+                >
+                  {tool}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 }

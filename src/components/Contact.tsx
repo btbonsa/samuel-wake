@@ -1,8 +1,9 @@
 import { motion } from 'motion/react';
 import { useInView } from './hooks/useInView';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { contactInfo } from '../data/contact';
 
 export function Contact() {
   const { ref, inView } = useInView();
@@ -10,17 +11,20 @@ export function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [responseMessage, setResponseMessage] = useState('');
 
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ;
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ;
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ ?? '';
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? '';
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? '';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (serviceId.includes('YOUR_') || templateId.includes('YOUR_') || publicKey.includes('YOUR_')) {
-      setStatus('error');
-      setResponseMessage('EmailJS is not configured correctly. Check your .env values.');
-      console.error('EmailJS configuration missing:', { serviceId, templateId, publicKey });
+    if (!serviceId || !templateId || !publicKey || serviceId.includes('YOUR_') || templateId.includes('YOUR_') || publicKey.includes('YOUR_')) {
+      const subject = encodeURIComponent(`Portfolio enquiry from ${formData.name}`);
+      const body = encodeURIComponent(`${formData.message}\n\nReply to: ${formData.email}`);
+      window.location.href = `mailto:btbonsa@gmail.com?subject=${subject}&body=${body}`;
+      setStatus('success');
+      setResponseMessage('Your email app is opening with your message ready to send.');
+      setFormData({ name: '', email: '', message: '' });
       return;
     }
 
@@ -45,19 +49,13 @@ export function Contact() {
     }
   };
 
-  const contactInfo = [
-    { icon: Mail, label: 'Email', value: 'btbonsa@gmail.com', href: 'mailto:btbonsa@gmail.com' },
-    { icon: Phone, label: 'Phone', value: '+251 970742748', href: 'tel:+251970742748' },
-    { icon: MapPin, label: 'Location', value: 'Addis Ababa, Ethiopia', href: '#' },
-  ];
-
-  const inputClass = "w-full px-4 py-3 rounded-xl bg-accent/50 border border-border/60 focus:border-foreground focus:outline-none focus:ring-2 focus:ring-white/10 transition-all duration-200 text-sm placeholder:text-muted-foreground/60";
+  const inputClass = "w-full px-4 py-3 rounded-xl bg-accent/50 border border-border/60 focus:border-foreground focus:outline-none focus:ring-2 focus:ring-foreground/10 transition-all duration-200 text-sm placeholder:text-muted-foreground/60";
 
   return (
     <section id="contact" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="absolute inset-0 bg-transparent" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -73,7 +71,7 @@ export function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -106,7 +104,7 @@ export function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
                 <input

@@ -1,42 +1,56 @@
-import { Mail} from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { NAV_ITEMS, socials } from '../data/site';
+
+const FOOTER_LINKS = NAV_ITEMS.filter(({ href }) => href !== '#home');
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const socials = [
-    { href: 'https://github.com/btbonsa', icon: <FaGithub size={18} />, label: 'GitHub' },
-    { href: 'https://www.linkedin.com/in/bonsa-tujo-640069347', icon: <FaLinkedin size={18} />, label: 'LinkedIn' },
-    { href: 'mailto:btbonsa@gmail.com', icon: <Mail className="w-[18px] h-[18px]" />, label: 'Email' },
-  ];
-
   return (
-    <footer className="relative py-10 px-4 sm:px-6 lg:px-8 border-t border-border/40 overflow-hidden">
-      <div className="absolute inset-0 bg-transparent" />
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col items-center gap-6">
-          <p className="text-lg font-bold text-foreground">&lt;Portfolio /&gt;</p>
+    <footer className="relative border-t border-border/60 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
+        <a
+          href="#home"
+          className="font-display text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-[#f25b3e]"
+        >
+          Samuel Wake<span className="text-[#f25b3e]">.</span>
+        </a>
 
-          <div className="flex items-center gap-3">
-            {socials.map(({ href, icon, label }) => (
+        <nav aria-label="Footer">
+          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            {FOOTER_LINKS.map(({ label, href }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  className="transition-colors duration-200 hover:text-foreground"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex items-center gap-2.5">
+          {socials.map(({ href, icon, label }) => {
+            const isExternal = href.startsWith('http');
+            return (
               <a
                 key={label}
                 href={href}
-                target={href.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
                 aria-label={label}
-                className="p-2.5 rounded-xl glass-card hover:scale-105 transition-all duration-300 text-foreground/70"
+                className="glass-card flex rounded-full p-2.5 text-muted-foreground transition-all duration-300 hover:-translate-y-1 hover:border-[#f25b3e]/40 hover:text-[#f25b3e]"
               >
                 {icon}
               </a>
-            ))}
-          </div>
-
-          <p className="text-sm text-muted-foreground flex items-center gap-1.5">
-            <span>© {currentYear} Bonsa Tujo. Built with</span>
-            <span>React</span>
-          </p>
+            );
+          })}
         </div>
+
+        <p className="text-xs text-muted-foreground/70">
+          © {currentYear} Samuel Wake. Content creator &amp; social media manager.
+        </p>
       </div>
     </footer>
   );

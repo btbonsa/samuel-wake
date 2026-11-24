@@ -1,93 +1,144 @@
-import { motion } from 'motion/react';
-import { useInView } from './hooks/useInView';
-import { Code2, Rocket, Users } from 'lucide-react';
-import profileImage from '../assets/1Profile.JPG';
+import { motion, MotionConfig } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
+import { FORMAT_ICON, SERVICES, TILE_GRADIENTS, TILES } from "../data/about";
+
+/** A feed-style grid. The middle column is dropped slightly, like a staggered profile grid. */
+function FeedGrid() {
+  return (
+    <div className="relative">
+      {/* Gold corner accents */}
+      <span aria-hidden className="absolute -left-3 -top-3 h-6 w-6 border-l-2 border-t-2 border-[#f25b3e]/50" />
+      <span aria-hidden className="absolute -bottom-3 -right-3 h-6 w-6 border-b-2 border-r-2 border-[#f25b3e]/50" />
+
+      <ul className="grid grid-cols-3 gap-2 pb-6 sm:gap-3">
+        {TILES.map((tile, i) => {
+          const Icon = FORMAT_ICON[tile.format];
+          return (
+            <li
+              key={i}
+              className={`group relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${
+                TILE_GRADIENTS[i % TILE_GRADIENTS.length]
+              } ${i % 3 === 1 ? "translate-y-6" : ""}`}
+            >
+              {tile.src && (
+                <img
+                  src={tile.src}
+                  alt={tile.alt ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
+              <span className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <span className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm">
+                <Icon className="h-3.5 w-3.5" aria-hidden />
+                <span className="sr-only">{tile.format}</span>
+              </span>
+              <span className="absolute bottom-2 left-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/0 transition-all duration-300 group-hover:text-white/90">
+                {tile.format}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 export function About() {
-  const { ref, inView } = useInView();
-
-  const highlights = [
-    { icon: Code2, title: 'Clean Code', description: 'Maintainable & scalable solutions' },
-    { icon: Rocket, title: 'Performance', description: 'Optimized for speed & efficiency' },
-    { icon: Users, title: 'Team Player', description: 'Collaborative & communicative' },
-  ];
-
   return (
-    <section id="about" className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-transparent" />
+    <MotionConfig reducedMotion="user">
+      <section
+        id="about"
+        className="relative scroll-mt-20 overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
+      >
+        {/* Faint gold wash behind the section */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-[#f25b3e]/[0.07] blur-[120px]"
+        />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+        {/* One reveal for the whole section, not one per element */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto grid max-w-4xl items-start gap-12 sm:gap-16 xl:grid-cols-[minmax(0,1fr)_minmax(0,400px)] xl:gap-16"
         >
-          <p className="text-sm font-semibold text-foreground/80 uppercase tracking-widest mb-3">Who I am</p>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">About Me</h2>
-          <div className="section-divider" />
-        </motion.div>
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-5 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f25b3e]"
+            >
+              <span className="h-px w-8 bg-[#f25b3e]/60" aria-hidden />
+              About me
+            </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <div className="relative max-w-md mx-auto">
-              <div className="w-64 sm:w-72 md:w-80 mx-auto">
-                <div className="fancy-frame mx-auto">
-                  <span className="sunlight" />
-                  <span className="fancy-ring" />
-                  <span className="glisten" />
-                  <img
-                    src={profileImage}
-                    alt="Profile"
-                    className="photo"
-                  />
-                  <span className="rim" />
-                </div>
-              </div>
+            <h2 className="font-display max-w-xl text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+              I handle the full creative cycle,{" "}
+              <span className="italic text-[#f25b3e]">from first idea</span> to
+              published post.
+            </h2>
+
+            <div className="mt-8 max-w-xl space-y-5 text-base leading-relaxed text-foreground/75 sm:text-lg">
+              <p>
+                I'm a content creator and social media manager. I turn ideas into
+                content people stop for, and brands into communities. I take care
+                of concept, scripting, shooting, editing and publishing, with a
+                focus on storytelling that connects and converts.
+              </p>
+              <p>
+                I plan content calendars, grow engaged audiences, and track what
+                works so every post has a purpose. When I'm not creating, I'm
+                studying trends, testing new formats, and learning what makes
+                people stop, watch, and share.
+              </p>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="space-y-6"
-          >
-            <p className="text-lg text-foreground/75 leading-relaxed">
-              I'm a passionate software developer with expertise in building modern web applications.
-              With a strong foundation in both frontend and backend technologies, I love turning
-              complex problems into simple, beautiful, and intuitive solutions.
-            </p>
-            <p className="text-lg text-foreground/75 leading-relaxed">
-              When I'm not coding, you'll find me exploring new technologies, contributing to
-              open-source projects, or sharing my knowledge with the developer community.
-            </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 pt-4">
-              {highlights.map((item, index) => (
-                <motion.div
-                  key={item.title}
+            {/* Services as interactive cards */}
+            <ul className="mt-12 grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
+              {SERVICES.map(({ icon: Icon, title, description }, i) => (
+                <motion.li
+                  key={title}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                  className="glass-card p-5 text-center hover:-translate-y-1 hover:shadow-md transition-all duration-300 group"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+                  className="group glass-card relative flex flex-col gap-4 rounded-2xl p-5"
                 >
-                  <div className="w-10 h-10 bg-transparent flex items-center justify-center mx-auto mb-3">
-                    <item.icon className="w-5 h-5 text-foreground/80" />
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.05] text-foreground/70 transition-colors duration-300 group-hover:bg-[#f25b3e]/15 group-hover:text-[#f25b3e]">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 text-muted-foreground/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#f25b3e]" aria-hidden />
                   </div>
-                  <h3 className="font-semibold text-sm mb-1 text-[#c9944a]">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground">{item.description}</p>
-                </motion.div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">{title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {description}
+                    </p>
+                  </div>
+                </motion.li>
               ))}
-            </div>
+            </ul>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+          >
+            <FeedGrid />
+            <p className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/60">
+              A snapshot of the work
+            </p>
           </motion.div>
-        </div>
-      </div>
-    </section>
+        </motion.div>
+      </section>
+    </MotionConfig>
   );
 }
