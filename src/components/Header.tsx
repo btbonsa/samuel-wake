@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
+import { useTheme } from 'next-themes';
 import { NAV_ITEMS } from '../data/site';
 
 const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as const;
@@ -9,6 +10,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>('#home');
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
 
   // Track scroll depth for floating white pill transition
   useEffect(() => {
@@ -87,15 +90,15 @@ export function Header() {
         <div
           className={`flex w-full max-w-4xl items-center justify-between gap-4 rounded-full border py-2 pl-5 pr-2 transition-all duration-500 ${
             scrolled
-              ? 'border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.06)]'
-              : 'border-transparent bg-white'
+              ? 'border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.06)] dark:border-white/10 dark:bg-zinc-900/90 dark:shadow-[0_12px_40px_rgba(0,0,0,0.4)]'
+              : 'border-transparent bg-white dark:bg-zinc-950/80 dark:backdrop-blur-md'
           }`}
         >
           {/* Brand Wordmark */}
           <button
             type="button"
             onClick={() => handleNavClick('#home')}
-            className="group flex items-baseline gap-0.5 rounded-lg font-display text-xl font-bold tracking-tight text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] focus-visible:ring-offset-2"
+            className="group flex items-baseline gap-0.5 rounded-lg font-display text-xl font-bold tracking-tight text-slate-900 transition-colors dark:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] focus-visible:ring-offset-2"
             aria-label="Samuel Wake — Back to top"
           >
             SW
@@ -116,15 +119,15 @@ export function Header() {
                   aria-current={isActive ? 'page' : undefined}
                   className={`relative rounded-full px-4 py-2 text-[13px] font-medium tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] ${
                     isActive
-                      ? 'font-semibold text-slate-900'
-                      : 'text-slate-500 hover:text-slate-900'
+                      ? 'font-semibold text-slate-900 dark:text-zinc-100'
+                      : 'text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100'
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                      className="absolute inset-0 rounded-full border border-slate-200/80 bg-slate-100/80"
+                      className="absolute inset-0 rounded-full border border-slate-200/80 bg-slate-100/80 dark:border-white/15 dark:bg-white/10"
                     />
                   )}
                   <span className="relative z-10">{label}</span>
@@ -133,12 +136,21 @@ export function Header() {
             })}
           </nav>
 
-          {/* Primary CTA & Mobile Drawer Toggle */}
+          {/* Primary CTA, theme toggle & Mobile Drawer Toggle */}
           <div className="flex items-center gap-2">
             <button
               type="button"
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              aria-label="Toggle color theme"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition-colors hover:border-[#f25b3e] hover:text-[#f25b3e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:text-[#f25b3e]"
+            >
+              <Sun className="hidden h-4.5 w-4.5 dark:block" aria-hidden />
+              <Moon className="h-4.5 w-4.5 dark:hidden" aria-hidden />
+            </button>
+            <button
+              type="button"
               onClick={() => handleNavClick('#contact')}
-              className="group hidden items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-[13px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f25b3e] hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] focus-visible:ring-offset-2 sm:inline-flex"
+              className="group hidden items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-[13px] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f25b3e] hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-900 dark:hover:bg-[#f25b3e] dark:hover:text-white sm:inline-flex"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#f25b3e] transition-colors duration-300 group-hover:bg-slate-950" />
               Let&apos;s talk
@@ -151,7 +163,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-colors hover:border-[#f25b3e] hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition-colors hover:border-[#f25b3e] hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] dark:border-white/15 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 md:hidden"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation-drawer"
@@ -174,7 +186,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col justify-between bg-white px-8 pb-10 pt-28 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-white px-8 pb-10 pt-28 dark:bg-zinc-950 md:hidden"
           >
             <nav className="flex flex-1 flex-col justify-center gap-2" aria-label="Mobile links">
               {NAV_ITEMS.map(({ label, href }, index) => {
@@ -194,8 +206,8 @@ export function Header() {
                     onClick={() => handleNavClick(href)}
                     className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-left font-display text-3xl font-semibold tracking-tight transition-colors ${
                       isActive
-                        ? 'bg-slate-100 text-[#f25b3e]'
-                        : 'text-slate-900 hover:bg-slate-50'
+                        ? 'bg-slate-100 text-[#f25b3e] dark:bg-white/10'
+                        : 'text-slate-900 hover:bg-slate-50 dark:text-zinc-100 dark:hover:bg-white/5'
                     }`}
                   >
                     <span>{label}</span>
@@ -203,7 +215,7 @@ export function Header() {
                       className={`h-6 w-6 transition-all duration-300 ${
                         isActive
                           ? 'text-[#f25b3e] opacity-100'
-                          : 'text-slate-400 opacity-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100'
+                          : 'text-zinc-400 opacity-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 dark:text-zinc-500'
                       }`}
                     />
                   </motion.button>
@@ -220,12 +232,12 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => handleNavClick('#contact')}
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#f25b3e] hover:text-slate-950 active:scale-[0.99]"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#f25b3e] hover:text-slate-950 active:scale-[0.99] dark:bg-white dark:text-zinc-900 dark:hover:bg-[#f25b3e] dark:hover:text-white"
               >
                 Let&apos;s talk
                 <ArrowUpRight className="h-4 w-4" aria-hidden />
               </button>
-              <p className="text-center text-xs tracking-wider text-slate-400">
+              <p className="text-center text-xs tracking-wider text-slate-400 dark:text-zinc-500">
                 Samuel Wake &bull; Content &amp; Social Media
               </p>
             </motion.div>

@@ -14,15 +14,38 @@ export type Tile = {
   alt?: string;
 };
 
-// TODO: replace these placeholders with real posts. Add `src` (and `alt`) to a
-// tile and the image replaces the gradient.
+// Demo placeholders — swap `src`/`alt` for real posts when ready.
 export const TILES: Tile[] = [
-  { format: "Reel" },
-  { format: "Carousel" },
-  { format: "Reel" },
-  { format: "Photo" },
-  { format: "Reel" },
-  { format: "Carousel" },
+  {
+    format: "Reel",
+    src: "https://picsum.photos/seed/reel-one/640/800",
+    alt: "Demo reel still",
+  },
+  {
+    format: "Carousel",
+    src: "https://picsum.photos/seed/carousel-one/640/800",
+    alt: "Demo carousel cover",
+  },
+  {
+    format: "Reel",
+    src: "https://picsum.photos/seed/reel-two/640/800",
+    alt: "Demo reel still",
+  },
+  {
+    format: "Photo",
+    src: "https://picsum.photos/seed/photo-one/640/800",
+    alt: "Demo photo post",
+  },
+  {
+    format: "Reel",
+    src: "https://picsum.photos/seed/reel-three/640/800",
+    alt: "Demo reel still",
+  },
+  {
+    format: "Carousel",
+    src: "https://picsum.photos/seed/carousel-two/640/800",
+    alt: "Demo carousel cover",
+  },
 ];
 
 export const FORMAT_ICON: Record<Tile["format"], LucideIcon> = {

@@ -136,7 +136,7 @@ export function Hero() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <a
                 href="#projects"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#171718] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#f25b3e]/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#f25b3e]/30"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#171718] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-[#f25b3e]/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#f25b3e]/30 dark:bg-white dark:text-zinc-900"
               >
                 View Selected Work
               </a>

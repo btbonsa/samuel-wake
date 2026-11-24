@@ -399,7 +399,7 @@ export function Projects() {
           <div
             role="group"
             aria-label="Filter by platform"
-            className="mx-auto flex w-max min-w-full items-center gap-0.5 rounded-full border border-border bg-white/80 p-1 shadow-sm backdrop-blur-sm sm:min-w-0"
+            className="mx-auto flex w-max min-w-full items-center gap-0.5 rounded-full border border-border bg-white/80 p-1 shadow-sm backdrop-blur-sm dark:bg-zinc-900/80 sm:min-w-0"
           >
             {PLATFORMS.map((p) => {
               const selected = platform === p;
@@ -416,7 +416,7 @@ export function Projects() {
                   aria-label={`Show ${count} ${p === 'All' ? 'project' : p + ' project'}${count === 1 ? '' : 's'}`}
                   className={`relative inline-flex min-h-7 shrink-0 snap-start items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f25b3e] focus-visible:ring-offset-2 sm:px-3.5 sm:text-xs ${
                     selected
-                      ? 'text-white'
+                      ? 'text-white dark:text-zinc-900'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -430,7 +430,7 @@ export function Projects() {
                   <span className="relative z-10 inline-flex items-center gap-1">
                     {p !== 'All' && platformIcon(p)}
                     {p === 'All' ? 'All' : p}
-                    <span className={`rounded-full px-1 py-px text-[9px] leading-none ${selected ? 'bg-white/15 text-white' : 'bg-foreground/[0.06] text-muted-foreground'}`} aria-hidden>
+                    <span className={`rounded-full px-1 py-px text-[9px] leading-none ${selected ? 'bg-white/15 text-white dark:bg-black/10 dark:text-zinc-900' : 'bg-foreground/[0.06] text-muted-foreground'}`} aria-hidden>
                       {count}
                     </span>
                   </span>
