@@ -1,8 +1,8 @@
 import { Mail, Phone } from 'lucide-react';
 
 export const EMAIL = 'btbonsa@gmail.com';
-export const PHONE_DISPLAY = '+251 970742748';
-export const PHONE_TEL = '+251970742748';
+export const PHONE_DISPLAY = '+251 908090308';
+export const PHONE_TEL = '+251908090308';
 
 export const socials = [
   { href: `mailto:${EMAIL}`, icon: <Mail className="h-[18px] w-[18px]" />, label: 'Email' },
