@@ -365,6 +365,23 @@ export function Projects() {
   const filteredReels = reels.filter(
     (item) => platform === 'All' || item.platform === platform,
   );
+  const currentReels = filteredReels.filter((item) => item.status === 'current');
+  const pastReels = filteredReels.filter((item) => item.status === 'past');
+
+  const renderGrid = (items: ReelItem[]) => (
+    <motion.div layout className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+      <AnimatePresence mode="popLayout">
+        {items.map((item, i) => (
+          <ReelCard
+            key={item.id}
+            item={item}
+            index={i}
+            onOpen={() => setActive(item)}
+          />
+        ))}
+      </AnimatePresence>
+    </motion.div>
+  );
 
   return (
     <section id="projects" className="relative scroll-mt-20 overflow-hidden px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
@@ -442,26 +459,29 @@ export function Projects() {
 
         {/* Current work (vertical reels) */}
         <div>
-          <h3 className="mb-6 flex items-center gap-3 text-lg font-bold text-foreground sm:text-xl">
-            <span className="h-px w-8 bg-[#f25b3e]" />
-            Currently Managing
-            <span className="relative ml-1 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-          </h3>
-          <motion.div layout className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
-            <AnimatePresence mode="popLayout">
-              {filteredReels.map((item, i) => (
-                <ReelCard
-                  key={item.id}
-                  item={item}
-                  index={i}
-                  onOpen={() => setActive(item)}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          {currentReels.length > 0 && (
+            <div>
+              <h3 className="mb-6 flex items-center gap-3 text-lg font-bold text-foreground sm:text-xl">
+                <span className="h-px w-8 bg-[#f25b3e]" />
+                Currently Managing
+                <span className="relative ml-1 flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+              </h3>
+              {renderGrid(currentReels)}
+            </div>
+          )}
+
+          {pastReels.length > 0 && (
+            <div className={currentReels.length > 0 ? 'mt-12' : ''}>
+              <h3 className="mb-6 flex items-center gap-3 text-lg font-bold text-foreground sm:text-xl">
+                <span className="h-px w-8 bg-[#f25b3e]" />
+                Past Work
+              </h3>
+              {renderGrid(pastReels)}
+            </div>
+          )}
         </div>
       </div>
 

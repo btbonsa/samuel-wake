@@ -9,7 +9,7 @@ export type ContactInfo = {
 };
 
 export const contactInfo: ContactInfo[] = [
-  { icon: Mail, label: 'Email', value: 'btbonsa@gmail.com', href: 'mailto:btbonsa@gmail.com' },
+  { icon: Mail, label: 'Email', value: 'samuelwakeswsw@gmail.com', href: 'mailto:btbonsa@gmail.com' },
   { icon: Phone, label: 'Phone', value: '+251 908090308', href: 'tel:+251908090308' },
   { icon: MapPin, label: 'Location', value: 'Holeta, Ethiopia', href: '#' },
 ];

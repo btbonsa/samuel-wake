@@ -21,7 +21,7 @@ export function Contact() {
     if (!serviceId || !templateId || !publicKey || serviceId.includes('YOUR_') || templateId.includes('YOUR_') || publicKey.includes('YOUR_')) {
       const subject = encodeURIComponent(`Portfolio enquiry from ${formData.name}`);
       const body = encodeURIComponent(`${formData.message}\n\nReply to: ${formData.email}`);
-      window.location.href = `mailto:btbonsa@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:samuelwakeswsw@gmail.com?subject=${subject}&body=${body}`;
       setStatus('success');
       setResponseMessage('Your email app is opening with your message ready to send.');
       setFormData({ name: '', email: '', message: '' });
